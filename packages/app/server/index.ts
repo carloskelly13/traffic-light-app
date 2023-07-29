@@ -1,11 +1,11 @@
-import express from "express"
+import express, { Express } from "express"
 import { renderPage } from "vite-plugin-ssr/server"
 import { createServer } from "vite"
 
 const root = `${__dirname}/..`
 const isProduction = process.env.NODE_ENV === "production"
 
-const app = express()
+const app: Express = express()
 
 async function startServer() {
   let viteDevServer
