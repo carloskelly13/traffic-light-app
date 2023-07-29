@@ -5,8 +5,8 @@ const Page = (): JSX.Element => {
   return (
     <>
       <h1>Carlos App!</h1>
-      This page is generated using Vite SSR plugin and on AWS
-      {counter}
+      This page is generated using Vite SSR plugin and deployed as a serverless
+      Vercel function. {counter}
       <button onClick={() => setCounter(counter + 1)}>Add!</button>
     </>
   )
