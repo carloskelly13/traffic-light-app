@@ -1,6 +1,10 @@
-const { renderPage } = require('vite-plugin-ssr')
+import { renderPage } from 'vite-plugin-ssr'
 
-async function handler(req, res) {
+/**
+ * @param {import('@vercel/node').VercelRequest} req
+ * @param {import('@vercel/node').VercelResponse} res
+ */
+export default async function handler(req, res) {
   const { url } = req
   if (url === undefined) throw new Error("req.url is undefined")
 
@@ -19,5 +23,3 @@ async function handler(req, res) {
   res.setHeader("content-type", contentType)
   res.end(body)
 }
-
-module.exports = { handler }
