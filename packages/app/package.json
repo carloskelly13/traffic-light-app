@@ -5,19 +5,17 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev:aws": "sst dev",
     "dev:local": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node server/index.ts\"",
-    "build:vite": "vite build && vite build --ssr"
+    "vercel-build": "vite build"
   },
   "keywords": [],
   "author": "Carlos Kelly",
   "license": "MIT",
   "dependencies": {
+    "@vercel/node": "^2.15.6",
     "express": "^4.18.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "serverless-http": "^3.2.0",
-    "sst": "2.22.6"
+    "react-dom": "18.2.0"
   },
   "tsup": {
     "dts": true,
