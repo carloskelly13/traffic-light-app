@@ -1,5 +1,5 @@
 {
-  "name": "traffic-light-client",
+  "name": "traffic-light-controller",
   "version": "1.0.0",
   "private": true,
   "main": "src/index.ts",
@@ -8,13 +8,12 @@
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Carlos Kelly",
   "dependencies": {
     "onoff": "^6.0.3",
     "socket.io": "^4.7.1",
     "socket.io-client": "^4.7.1",
-    "tsup": "7.1.0",
-    "typescript": "5.1.6"
+    "tsup": "7.1.0"
   },
   "tsup": {
     "dts": true,
@@ -32,6 +31,7 @@
   "devDependencies": {
     "@types/node": "20.4.5",
     "nodemon": "^3.0.1",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "5.1.6"
   }
 }

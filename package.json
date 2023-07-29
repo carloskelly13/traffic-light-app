@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client:dev": "pnpm run --filter traffic-light-client dev",
-    "server:dev": "pnpm run --filter traffic-light-server dev"
+    "controller:dev": "pnpm run --filter traffic-light-controller dev",
+    "app:dev": "pnpm run --filter traffic-light-app dev"
   },
   "keywords": [],
   "author": "",
