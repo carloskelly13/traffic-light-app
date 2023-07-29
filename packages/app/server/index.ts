@@ -5,8 +5,9 @@ import { createServer } from "vite"
 const root = `${__dirname}/..`
 const isProduction = process.env.NODE_ENV === "production"
 
+const app = express()
+
 async function startServer() {
-  const app = express()
   let viteDevServer
 
   if (isProduction) {
@@ -37,3 +38,5 @@ async function startServer() {
 }
 
 startServer()
+
+export default app
