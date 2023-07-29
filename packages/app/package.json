@@ -5,7 +5,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node server/index.ts\""
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node server/index.ts\"",
+    "build": "vite build && vite build --ssr",
+    "run:prod": "NODE_ENV=production ts-node ./server/index.ts"
   },
   "keywords": [],
   "author": "Carlos Kelly",

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "controller:dev": "pnpm run --filter traffic-light-controller dev",
-    "app:dev": "pnpm run --filter traffic-light-app dev"
+    "app:dev": "pnpm run --filter traffic-light-app dev",
+    "app:build": "pnpm run --filter traffic-light-app build",
+    "app:prod": "pnpm run --filter traffic-light-app run:prod"
   },
   "keywords": [],
   "author": "",

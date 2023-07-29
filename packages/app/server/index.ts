@@ -1,17 +1,23 @@
 import express from "express"
 import { renderPage } from "vite-plugin-ssr/server"
-import vite from "vite"
+import { createServer } from "vite"
+
 const root = `${__dirname}/..`
+const isProduction = process.env.NODE_ENV === "production"
 
 async function startServer() {
   const app = express()
+  let viteDevServer
 
-  const viteDevServer = await vite.createServer({
-    root,
-    server: { middlewareMode: true },
-  })
-
-  app.use(viteDevServer.middlewares)
+  if (isProduction) {
+    app.use(express.static(`${root}/dist/client`))
+  } else {
+    viteDevServer = await createServer({
+      root,
+      server: { middlewareMode: true },
+    })
+    app.use(viteDevServer.middlewares)
+  }
 
   app.get("*", async (req, res, next) => {
     const pageContextInit = {
