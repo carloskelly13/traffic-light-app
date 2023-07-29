@@ -1,6 +1,6 @@
 {
   "functions": {
-    "server/index.ts": {
+    "pacakges/app/server/index.ts": {
       "memory": 3008,
       "maxDuration": 60
     }
