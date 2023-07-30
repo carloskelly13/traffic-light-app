@@ -1,23 +1,22 @@
 {
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "strict": true,
-    "module": "ES2020",
-    "moduleResolution": "Node",
-    "target": "ES2017",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client", "@types/react"],
-    "jsx": "react",
-    "skipLibCheck": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "isolatedModules": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
     "paths": {
-      "#app/*": ["./*"]
-    }
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "esModuleInterop": true,
-      "module": "ESNext"
-    }
+      "~/*": ["./app/*"]
+    },
+
+    // Remix takes care of building everything in `remix build`.
+    "noEmit": true
   }
 }
