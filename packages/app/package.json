@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev:local": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node server/index.ts\"",
+    "dev:local": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node-esm server/index.ts\"",
     "vercel-build": "vite build"
   },
   "keywords": [],

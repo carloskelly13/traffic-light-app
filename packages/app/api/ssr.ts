@@ -1,6 +1,10 @@
-const { renderPage } = require('vite-plugin-ssr')
+import { renderPage } from "vite-plugin-ssr"
+import type { NextApiRequest, NextApiResponse } from "next"
 
-async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const { url } = req
   if (url === undefined) throw new Error("req.url is undefined")
 
@@ -19,5 +23,3 @@ async function handler(req, res) {
   res.setHeader("content-type", contentType)
   res.end(body)
 }
-
-module.exports = handler

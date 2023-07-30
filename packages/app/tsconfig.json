@@ -16,7 +16,8 @@
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
-      "module": "CommonJS"
+      "esModuleInterop": true,
+      "module": "ESNext"
     }
   }
 }
