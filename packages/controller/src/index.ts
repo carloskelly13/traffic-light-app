@@ -3,7 +3,7 @@ import Pusher from "pusher-js"
 import express from "express"
 import pico from "picocolors"
 
-import { gpioPins, resetPins } from "./gpio"
+import { gpioPins, resetPins, delay, HIGH, LOW } from "./gpio"
 
 dotenv.config()
 
@@ -18,6 +18,18 @@ app.listen(PORT, async () => {
   await resetPins()
   const channel = pusher.subscribe("traffic-light-channel")
   channel.bind("signal", (data: Record<string, unknown>) => {
+    ;(async () => {
+      await gpioPins.greenPin.write(HIGH)
+      await delay(3000)
+      await gpioPins.greenPin.write(LOW)
+      await gpioPins.yellowPin.write(HIGH)
+      await delay(1000)
+      await gpioPins.yellowPin.write(LOW)
+      await gpioPins.redPin.write(HIGH)
+      await delay(3000)
+      await gpioPins.redPin.write(LOW)
+    })()
+
     console.log(JSON.stringify(data))
   })
 })
