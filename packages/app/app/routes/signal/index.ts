@@ -15,18 +15,15 @@ const pusher = new Pusher({
 })
 
 const handlePOST = async (request: Request) => {
+  const payload = <Record<string, Phase[]>>await request.json()
+
   if (!verifyApiToken(request)) return json({ message: "Unauthorized" }, 401)
+  if (!Array.isArray(payload.phases))
+    return json({ message: "Invalid request" }, 400)
 
   try {
     const response = await pusher.trigger("traffic-light-channel", "signal", {
-      phases: [
-        {
-          action: "signal",
-          context: { pin: "green", value: 0 },
-        },
-        { action: "pause", context: { duration: 3000 } },
-        { action: "signal", context: { pin: "green", value: 1 } },
-      ] satisfies Phase[],
+      phases: payload.phases,
     })
     if (response.ok) return json(response.statusText, 200)
     return json({ message: response.statusText }, 500)
