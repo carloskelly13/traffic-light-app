@@ -1,7 +1,8 @@
-import type { LoaderArgs } from "@remix-run/node"
+import type { ActionArgs, LoaderArgs } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import Pusher from "pusher"
 import { verifyApiToken } from "~/util/verify-api-token"
+import { Phase } from "traffic-light-controller"
 
 const { PUSHER_APP_ID, PUSHER_KEY, PUSHER_SECRET, PUSHER_CLUSTER } = process.env
 
@@ -13,16 +14,31 @@ const pusher = new Pusher({
   useTLS: true,
 })
 
-export const loader = async ({ request }: LoaderArgs) => {
-  if (!verifyApiToken(request)) throw json({ message: "Unauthorized" }, 401)
+const handlePOST = async (request: Request) => {
+  if (!verifyApiToken(request)) return json({ message: "Unauthorized" }, 401)
 
   try {
     const response = await pusher.trigger("traffic-light-channel", "signal", {
-      message: "hello world",
+      phases: [
+        {
+          action: "signal",
+          context: { pin: "green", value: 0 },
+        },
+        { action: "pause", context: { duration: 3000 } },
+        { action: "signal", context: { pin: "green", value: 1 } },
+      ] satisfies Phase[],
     })
     if (response.ok) return json(response.statusText, 200)
-    throw json({ message: response.statusText }, 500)
-  } catch (e) {
-    throw json({ message: "Failed to send signal message." }, 500)
+    return json({ message: response.statusText }, 500)
+  } catch (err) {
+    console.log(err)
+    return json({ message: err }, 500)
   }
+}
+
+export const loader = async () => json({ message: "Method not allowed." }, 405)
+
+export const action = async ({ request }: ActionArgs) => {
+  if (request.method === "POST") return handlePOST(request)
+  return json({ message: "Method not allowed." }, 405)
 }

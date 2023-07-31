@@ -56,6 +56,9 @@ importers:
       socket.io:
         specifier: ^4.7.1
         version: 4.7.1
+      traffic-light-controller:
+        specifier: '*'
+        version: link:../controller
     devDependencies:
       '@remix-run/dev':
         specifier: ^1.19.1
