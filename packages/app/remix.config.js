@@ -4,6 +4,7 @@ module.exports = {
   // When running locally in development mode, we use the built-in remix
   // server. This does not understand the vercel lambda module format,
   // so we default back to the standard build output.
+  tailwind: true,
   server: process.env.NODE_ENV === "development" ? undefined : "./server.ts",
   serverBuildPath: "api/index.js",
   // appDirectory: "app",

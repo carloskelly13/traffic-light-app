@@ -1,4 +1,5 @@
 import type { V2_MetaFunction } from "@remix-run/node"
+import { TrafficLight } from "~/components/traffic-light"
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -10,7 +11,8 @@ export const meta: V2_MetaFunction = () => {
 export default function Index() {
   return (
     <div>
-      <h1>Traffic Light Control App</h1>
+      <TrafficLight />
+      <h1 className="text-3xl font-bold underline">Traffic Light App</h1>
     </div>
   )
 }
