@@ -2,7 +2,7 @@ import type { ActionArgs, LoaderArgs } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import Pusher from "pusher"
 import { verifyApiToken } from "~/util/verify-api-token"
-import { Phase } from "traffic-light-controller"
+import { type Phase } from "traffic-light-controller"
 
 const { PUSHER_APP_ID, PUSHER_KEY, PUSHER_SECRET, PUSHER_CLUSTER } = process.env
 

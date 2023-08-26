@@ -1,10 +1,12 @@
 import type { BinaryValue } from "onoff"
 import { delay, gpioPins } from "./gpio"
 
+export type Pin = "green" | "yellow" | "red"
+
 export type Phase =
   | {
       action: "signal"
-      context: { pin: "green" | "yellow" | "red"; value: BinaryValue }
+      context: { pin: Pin; value: BinaryValue }
     }
   | {
       action: "pause"

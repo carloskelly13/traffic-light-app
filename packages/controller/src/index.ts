@@ -3,7 +3,7 @@ import Pusher from "pusher-js"
 import express from "express"
 import pico from "picocolors"
 import { resetPins } from "./gpio"
-import { Phase, runPhase } from "./phase"
+import { type Phase, type Pin, runPhase } from "./phase"
 
 dotenv.config()
 
@@ -22,4 +22,4 @@ app.listen(PORT, async () => {
   })
 })
 
-export type { Phase }
+export type { Phase, Pin }
