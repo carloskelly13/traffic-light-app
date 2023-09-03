@@ -1,4 +1,4 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/node"
+import type { ActionArgs } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import Pusher from "pusher"
 import { verifyApiToken } from "~/util/verify-api-token"
