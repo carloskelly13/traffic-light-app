@@ -1,3 +1,4 @@
+import { logError } from "./error-handler"
 import { resetPins, delay, gpioPins, HIGH, LOW } from "./gpio"
 
 export class LoopController {
@@ -8,7 +9,7 @@ export class LoopController {
       await resetPins()
       this.isRunning = true
     } catch (error) {
-      console.error(error)
+      logError(error)
       this.isRunning = false
       return
     }
@@ -25,7 +26,7 @@ export class LoopController {
         await delay(phaseDuration)
         await gpioPins.redPin.write(LOW)
       } catch (error) {
-        console.error(error)
+        logError(error)
         this.isRunning = false
       }
     }

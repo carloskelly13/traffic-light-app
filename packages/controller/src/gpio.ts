@@ -4,6 +4,12 @@ export const HIGH = 0
 export const LOW = 1
 export type BinaryValue = typeof HIGH | typeof LOW
 
+export enum ColorPin {
+  Red = 26,
+  Yellow = 20,
+  Green = 21,
+}
+
 const execPromise = (command: string) =>
   new Promise((resolve, reject) =>
     exec(command, (error, stdout, stderr) => {
@@ -25,12 +31,15 @@ class GpioPin {
 }
 
 export const gpioPins = {
-  redPin: new GpioPin(26),
-  yellowPin: new GpioPin(20),
-  greenPin: new GpioPin(21),
+  redPin: new GpioPin(ColorPin.Red),
+  yellowPin: new GpioPin(ColorPin.Yellow),
+  greenPin: new GpioPin(ColorPin.Green),
 } as const
 
-export const resetPins = () => execPromise("pinctrl set 26,21,20 op pn dh")
+export const allPins = Object.values(ColorPin)
+  .filter(value => typeof value === "number")
+  .join(",")
+export const resetPins = () => execPromise(`pinctrl set ${allPins} op pn dh`)
 
 export const delay = (time: number) =>
   new Promise(resolve => setTimeout(resolve, time))

@@ -4,6 +4,7 @@ import express from "express"
 import pico from "picocolors"
 import { resetPins } from "./gpio"
 import { type Phase, type Pin, runPhase } from "./phase"
+import { logError } from "./error-handler"
 
 dotenv.config()
 
@@ -15,11 +16,15 @@ app.listen(PORT, async () => {
   console.log(
     pico.green(pico.bold(`Started Traffic Light Controller on port ${PORT}.`)),
   )
-  await resetPins()
-  const channel = pusher.subscribe("traffic-light-channel")
-  channel.bind("signal", async (data: Record<string, unknown>) => {
-    Array.isArray(data.phases) && (await runPhase(data.phases))
-  })
+  try {
+    await resetPins()
+    const channel = pusher.subscribe("traffic-light-channel")
+    channel.bind("signal", async (data: Record<string, unknown>) => {
+      Array.isArray(data.phases) && (await runPhase(data.phases))
+    })
+  } catch (error) {
+    logError(error)
+  }
 })
 
 export type { Phase, Pin }
