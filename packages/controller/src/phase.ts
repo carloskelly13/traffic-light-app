@@ -1,4 +1,5 @@
 import { type BinaryValue, delay, gpioPins } from "./gpio"
+import { LoopController } from "./loop-controller"
 
 export type Pin = "green" | "yellow" | "red"
 
@@ -11,6 +12,14 @@ export type Phase =
       action: "pause"
       context: { duration: number }
     }
+  | {
+      action: "start-sequence"
+    }
+  | {
+      action: "end-sequence"
+    }
+
+const loopController = new LoopController()
 
 export const runPhase = async (phases: Phase[]) => {
   for await (const phase of phases) {
@@ -22,6 +31,12 @@ export const runPhase = async (phases: Phase[]) => {
         const pinLabel = phase.context.pin + "Pin"
         Object.keys(gpioPins).includes(pinLabel) &&
           (await gpioPins[pinLabel].write(phase.context.value))
+      case "start-sequence":
+        loopController.startLoop()
+        break
+      case "end-sequence":
+        loopController.stopLoop()
+        break
     }
   }
 }
