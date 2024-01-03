@@ -1,5 +1,4 @@
-import type { BinaryValue } from "onoff"
-import { delay, gpioPins } from "./gpio"
+import { type BinaryValue, delay, gpioPins } from "./gpio"
 
 export type Pin = "green" | "yellow" | "red"
 

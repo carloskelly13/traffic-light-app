@@ -1,29 +1,40 @@
-import { MockGpio } from "./mock-gpio"
-import type { Gpio } from "onoff"
+import { exec } from "node:child_process"
 
+export type BinaryValue = 0 | 1
 export const HIGH = 0
 export const LOW = 1
-const GpioClass =
-  process.platform === "linux" ? require("onoff").Gpio : MockGpio
 
-const redPin: Gpio = new GpioClass(26, "out")
-const yellowPin: Gpio = new GpioClass(20, "out")
-const greenPin: Gpio = new GpioClass(21, "out")
+const execPromise = (command: string) => {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject({ error, stderr });
+      } else {
+        resolve(stdout);
+      }
+    });
+  });
+}
 
-export const gpioPins = { redPin, yellowPin, greenPin } as const
+class GpioPin {
+  private pinId: number
+  constructor(pinId: number) {
+    this.pinId = pinId
+  }
 
-export const resetPins = () =>
-  Promise.allSettled([
-    redPin.write(LOW),
-    yellowPin.write(LOW),
-    greenPin.write(LOW),
-  ])
+  async write(value: BinaryValue) {
+    const signal = value === 0 ? 'dl' : 'dh'
+    await execPromise(`pinctrl set ${this.pinId} op pn ${signal}`)
+  }
+}
+
+export const gpioPins = { 
+  redPin: new GpioPin(26), 
+  yellowPin: new GpioPin(20), 
+  greenPin: new GpioPin(21) 
+} as const
+
+export const resetPins = () => execPromise('pinctrl set 26,21,20 op pn dh')
 
 export const delay = (time: number) =>
   new Promise(resolve => setTimeout(resolve, time))
-
-process.on("SIGINT", () => {
-  redPin?.unexport()
-  yellowPin?.unexport()
-  greenPin?.unexport()
-})
