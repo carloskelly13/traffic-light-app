@@ -32,10 +32,10 @@ export const runPhase = async (phases: Phase[]) => {
         Object.keys(gpioPins).includes(pinLabel) &&
           (await gpioPins[pinLabel].write(phase.context.value))
       case "start-sequence":
-        loopController.startLoop()
+        await loopController.startLoop()
         break
       case "end-sequence":
-        loopController.stopLoop()
+        await loopController.stopLoop()
         break
     }
   }

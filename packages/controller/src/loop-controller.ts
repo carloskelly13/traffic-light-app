@@ -32,7 +32,8 @@ export class LoopController {
     }
   }
 
-  stopLoop() {
+  async stopLoop() {
     this.isRunning = false
+    await resetPins()
   }
 }

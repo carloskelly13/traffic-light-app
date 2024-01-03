@@ -19,20 +19,30 @@ export default function Index() {
     setIsDisabled(!accessToken || accessToken.trim().length === 0)
   }, [accessToken])
 
-  const handleRedButtonPressed = useCallback(
-    async (pin?: Pin) => {
+  const handleSignalButtonPressed = useCallback(
+    async (action: "signal" | "sequence" | "reset", pin?: Pin) => {
       if (isDisabled) return
       try {
+        const body = (() => {
+          switch (action) {
+            case "signal":
+              return {
+                phases: createPhase(
+                  pin ? [{ action: "signal", context: { pin, value: 0 } }] : [],
+                ),
+              }
+            case "sequence":
+              return [{ action: "start-sequence" }]
+            case "reset":
+              return [{ action: "end-sequence" }]
+          }
+        })()
         await fetch("signal", {
           headers: {
             "api-access-token": accessToken,
           },
           method: "POST",
-          body: JSON.stringify({
-            phases: createPhase(
-              pin ? [{ action: "signal", context: { pin, value: 0 } }] : [],
-            ),
-          }),
+          body: JSON.stringify(body),
         })
       } catch (e) {
         console.log(e)
@@ -46,14 +56,23 @@ export default function Index() {
       <h1 className="text-2xl font-bold">Traffic Light App</h1>
       <TrafficLight
         disabled={isDisabled}
-        handleRedSelected={() => handleRedButtonPressed("red")}
-        handleYellowSelected={() => handleRedButtonPressed("yellow")}
-        handleGreenSelected={() => handleRedButtonPressed("green")}
+        handleRedSelected={() => handleSignalButtonPressed("signal", "red")}
+        handleYellowSelected={() =>
+          handleSignalButtonPressed("signal", "yellow")
+        }
+        handleGreenSelected={() => handleSignalButtonPressed("signal", "green")}
         className="w-32 my-10"
       />
       <button
         className="border-2 border-slate-800 text-slate-400 cursor-not-allowed enabled:cursor-pointer enabled:text-black bg-slate-200 enabled:hover:bg-blue-600 enabled:hover:text-white px-4 py-1 rounded mb-4"
-        onClick={() => handleRedButtonPressed()}
+        onClick={() => handleSignalButtonPressed("sequence")}
+        disabled={isDisabled}
+      >
+        Start Auto-Sequence
+      </button>
+      <button
+        className="border-2 border-slate-800 text-slate-400 cursor-not-allowed enabled:cursor-pointer enabled:text-black bg-slate-200 enabled:hover:bg-blue-600 enabled:hover:text-white px-4 py-1 rounded mb-4"
+        onClick={() => handleSignalButtonPressed("reset")}
         disabled={isDisabled}
       >
         Turn Traffic Light Off
