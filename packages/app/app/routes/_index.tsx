@@ -32,9 +32,9 @@ export default function Index() {
                 ),
               }
             case "sequence":
-              return [{ action: "start-sequence" }]
+              return { phases: [{ action: "start-sequence" }] }
             case "reset":
-              return [{ action: "end-sequence" }]
+              return { phases: [{ action: "end-sequence" }] }
           }
         })()
         await fetch("signal", {
