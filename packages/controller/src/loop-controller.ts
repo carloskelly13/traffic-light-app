@@ -4,7 +4,7 @@ import { resetPins, delay, gpioPins, HIGH, LOW } from "./gpio"
 export class LoopController {
   private isRunning = false
 
-  async startLoop({ phaseDuration = 2000, yellowDuration = 1000 } = {}) {
+  async startLoop({ phaseDuration = 10000, yellowDuration = 3000 } = {}) {
     try {
       await resetPins()
       this.isRunning = true
