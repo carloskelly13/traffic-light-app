@@ -79,7 +79,7 @@ export default function Index() {
       </button>
       <input
         className="border-2 border-slate-800 px-4 py-1 rounded w-11/12 md:w-2/3 lg:w-1/3 font-mono"
-        type="text"
+        type="password"
         placeholder="Access Token"
         value={accessToken}
         onChange={event => setAccessToken(event.currentTarget.value)}
