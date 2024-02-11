@@ -1,14 +1,20 @@
-import type { V2_MetaFunction } from "@remix-run/node"
+import type { LoaderFunction, V2_MetaFunction } from "@remix-run/node"
 import { TrafficLight } from "~/components/traffic-light"
 import { useCallback, useEffect, useState } from "react"
 import { createPhase } from "~/util/create-phase"
 import { Pin } from "traffic-light-controller"
+import { verifyAuth } from "../util/verify-auth"
 
 export const meta: V2_MetaFunction = () => {
   return [
     { title: "Traffic Light" },
     { name: "description", content: "Traffic Light Control App" },
   ]
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const authStatus = await verifyAuth(request)
+  return { authStatus }
 }
 
 export default function Index() {
