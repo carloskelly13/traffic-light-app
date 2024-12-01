@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "controller:dev": "pnpm run --filter traffic-light-controller dev",
     "controller:build": "pnpm run --filter traffic-light-controller build",
-    "app:dev": "pnpm run --filter traffic-light-app dev",
-    "app:build": "pnpm run --filter traffic-light-app build"
+    "app:dev": "pnpm run --filter traffic-light-web-app dev",
+    "app:build": "pnpm run --filter traffic-light-web-app build"
   },
   "keywords": [],
   "author": "",

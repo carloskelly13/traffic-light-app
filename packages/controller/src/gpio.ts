@@ -11,14 +11,9 @@ export enum ColorPin {
 }
 
 const execPromise = (command: string) =>
-  new Promise((resolve, reject) =>
-    exec(command, (error, stdout, stderr) => {
-      if (error) reject({ error, stderr })
-      else resolve(stdout)
-    }),
-  )
+  new Promise(resolve => exec(command, resolve))
 
-class GpioPin {
+export class GpioPin {
   private readonly pinId: number
   constructor(pinId: number) {
     this.pinId = pinId
@@ -39,7 +34,9 @@ export const gpioPins = {
 export const allPins = Object.values(ColorPin)
   .filter(value => typeof value === "number")
   .join(",")
-export const resetPins = () => execPromise(`pinctrl set ${allPins} op pn dh`)
+
+export const resetPins = async () =>
+  execPromise(`pinctrl set ${allPins} op pn dh`)
 
 export const delay = (time: number) =>
   new Promise(resolve => setTimeout(resolve, time))

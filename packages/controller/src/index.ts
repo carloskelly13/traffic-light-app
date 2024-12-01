@@ -3,8 +3,9 @@ import Pusher from "pusher-js"
 import express from "express"
 import pico from "picocolors"
 import { resetPins } from "./gpio"
-import { type Phase, type Pin, runPhase } from "./phase"
+import { runPhase } from "./phase"
 import { logError } from "./error-handler"
+import { Phase, PhaseSchema } from "./types"
 
 dotenv.config()
 
@@ -20,11 +21,17 @@ app.listen(PORT, async () => {
     await resetPins()
     const channel = pusher.subscribe("traffic-light-channel")
     channel.bind("signal", async (data: Record<string, unknown>) => {
-      Array.isArray(data.phases) && (await runPhase(data.phases))
+      if (!Array.isArray(data.phases)) {
+        return
+      }
+      for (const phase of data.phases) {
+        const { success, data } = PhaseSchema.safeParse(phase)
+        if (success) {
+          await runPhase(data)
+        }
+      }
     })
   } catch (error) {
     logError(error)
   }
 })
-
-export type { Phase, Pin }

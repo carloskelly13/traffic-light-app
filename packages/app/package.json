@@ -1,38 +1,27 @@
 {
-  "name": "traffic-light-app",
-  "private": true,
-  "sideEffects": false,
+  "name": "traffic-light-web-app",
+  "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
-    "typecheck": "tsc"
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
   },
   "dependencies": {
-    "@remix-run/css-bundle": "^1.19.1",
-    "@remix-run/node": "^1.19.1",
-    "@remix-run/react": "^1.19.1",
-    "@remix-run/vercel": "^1.19.1",
-    "@vercel/node": "^2.10.3",
-    "clsx": "^2.0.0",
-    "google-auth-library": "^9.6.3",
-    "isbot": "^3.6.8",
-    "pusher": "^5.1.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "socket.io": "^4.7.1",
-    "traffic-light-controller": "*"
-  },
-  "devDependencies": {
-    "@remix-run/dev": "^1.19.1",
-    "@remix-run/eslint-config": "^1.19.1",
-    "@remix-run/serve": "^1.19.1",
-    "@types/react": "^18.0.35",
-    "@types/react-dom": "^18.0.11",
-    "eslint": "^8.38.0",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.4"
+    "@solidjs/router": "0.15.0",
+    "@solidjs/start": "1.0.10",
+    "autoprefixer": "10.4.19",
+    "clsx": "2.1.1",
+    "dotenv": "^16.3.1",
+    "postcss": "8.4.38",
+    "pusher": "5.2.0",
+    "pusher-js": "8.0.0",
+    "solid-js": "1.9.2",
+    "tailwindcss": "3.4.3",
+    "traffic-light-controller": "*",
+    "vinxi": "0.4.3",
+    "zod": "^3.23.8"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18"
   }
 }
