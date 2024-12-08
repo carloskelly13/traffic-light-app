@@ -5,9 +5,9 @@ export const LOW = 1
 export type BinaryValue = typeof HIGH | typeof LOW
 
 export enum ColorPin {
-  Red = 26,
+  Red = 21,
   Yellow = 20,
-  Green = 21,
+  Green = 26,
 }
 
 const execPromise = (command: string) =>
