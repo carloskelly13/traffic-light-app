@@ -1,14 +1,23 @@
-## Traffic Light App Monorepo
+## Carlos Traffic Light Monorepo
 
-This project is a monorepo containing two TypeScript-based applications for controlling the signalling of a traffic light. The traffic light has its lighting modules connected to a Raspberry Pi using a high-voltage relay add-on board.
+This project is a monorepo containing a TypeScript-based ecosystem for controlling a physical traffic light. The traffic light has its lighting modules connected to a Raspberry Pi using a high-voltage relay add-on board.
 
 ### Traffic Light Web App
-`packages/app`
+`packages/web`
 
-A Remix-based application deployed on Vercel for controlling the traffic light. This is a full-stack application that will have both an endpoint and a UI for sending different signalling phases to the traffic light. Communication to the controller app on the Raspberry Pi is done through Pusher.
+A modern Next.js 15 application with authentication and real-time control capabilities. This full-stack application provides both an API and an interactive UI for controlling the traffic light remotely.
 
-The Remix app has a `POST` endpoint at `/signal` that sends the signal phases to the controller app. This allows for full customization of which lights are shown and for how long with pauses between phases. An example payload below will show the green light for 5 seconds, yellow for 3 seconds, and red for 5 seconds. `0` is a `HIGH` signal representing the relay being closed, thus turning on the light. `1` represents a `LOW` signal representing the relay being open, thus the light being off.
+**Key Features:**
+- 🔐 **Google OAuth Authentication** - Secure access with email whitelist
+- 🚦 **Interactive Traffic Light UI** - Click individual lights or use sequence controls
+- ⚡ **Optimistic Updates** - Instant UI feedback with automatic error recovery
+- 🔄 **Real-time Communication** - Uses Pusher for reliable message delivery
+- 🎨 **Modern Stack** - Next.js 15, TypeScript, Tailwind CSS, NextAuth.js v5
 
+**API Endpoint:**
+The Next.js app provides a `POST` endpoint at `/api/signal` that accepts phase arrays and forwards them to the controller. This allows for full customization of light sequences and timing.
+
+**Example API Usage:**
 ```json
 {
   "phases": [
@@ -25,10 +34,69 @@ The Remix app has a `POST` endpoint at `/signal` that sends the signal phases to
 }
 ```
 
+**Signal Values:**
+- `0` = Light ON (HIGH signal, relay closed)
+- `1` = Light OFF (LOW signal, relay open)
+
+
 ### Traffic Light Controller App
 `packages/controller`
 
-An Express-based application that runs as a local service on the Raspberry Pi that accepts incoming messages from Pusher and controls the lights using GPIO APIs.
+A lightweight Node.js application that runs as a service on the Raspberry Pi. It subscribes to Pusher messages from the web app and controls the physical traffic light hardware using GPIO APIs.
+
+**Key Features:**
+- 🔌 **GPIO Control** - Direct hardware interface for relay switching
+- 📡 **Pusher Integration** - Real-time message subscription
+- 🔄 **Phase Execution** - Processes complex light sequences
+- 🛡️ **Error Handling** - Robust error recovery and logging
+- 🚀 **Auto-start** - Configurable as system service
+
+**Installation on Raspberry Pi:**
+```bash
+cd packages/controller
+npm install
+npm run build
+# Configure environment variables
+npm start
+```
+
+## Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Web Browser   │    │  Pusher Cloud   │    │  Raspberry Pi   │
+│                 │    │                 │    │                 │
+│  Next.js App    │───▶│   Message       │───▶│   Controller    │
+│  Authentication │    │   Routing       │    │   GPIO Control  │
+│  Traffic Light  │    │                 │    │   Physical      │
+│  Interface      │    │                 │    │   Traffic Light │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+**Data Flow:**
+1. User authenticates with Google OAuth
+2. User interacts with traffic light UI
+3. Web app sends phase commands via Pusher
+4. Controller receives messages and controls hardware
+5. Physical traffic light changes state
+
+## Setup Requirements
+
+**Web App:**
+- Node.js 18+
+- Google OAuth credentials
+- Pusher account (free tier available)
+- Email whitelist configuration
+
+**Controller:**
+- Raspberry Pi with GPIO access
+- High-voltage relay board
+- Physical traffic light hardware
+- Same Pusher credentials as web app
+
+## Environment Variables
+
+Both apps require Pusher configuration. See individual package READMEs for detailed setup instructions.
 
 ### Demonstration
 

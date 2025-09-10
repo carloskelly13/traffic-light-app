@@ -74,7 +74,7 @@ export const useTrafficLight = (): UseTrafficLightReturn => {
 
   const toggleLight = async (pin: "red" | "yellow" | "green") => {
     const currentValue = lights[pin]
-    const newValue = currentValue ? 0 : 1
+    const newValue = currentValue ? 1 : 0  // if on -> send 1 (OFF), if off -> send 0 (ON)
     await sendSignal(pin, newValue)
   }
 
