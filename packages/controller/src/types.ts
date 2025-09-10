@@ -14,22 +14,6 @@ export enum Action {
   endSequence = "end-sequence",
 }
 
-// export type Phase =
-//   | {
-//       action: Action.signal
-//       context: { pin: Pin; value: BinaryValue }
-//     }
-//   | {
-//       action: Action.pause
-//       context: { duration: number }
-//     }
-//   | {
-//       action: Action.startSequence
-//     }
-//   | {
-//       action: Action.endSequence
-//     }
-
 export const SignalRequestSchema = z
   .object({
     action: z.nativeEnum(Action),
