@@ -29,7 +29,7 @@ export const useTrafficLight = (): UseTrafficLightReturn => {
     const previousState = lights[pin]
     setLights(prev => ({
       ...prev,
-      [pin]: value === 1,
+      [pin]: value === 0,
     }))
 
     setLoading(true)
@@ -74,7 +74,7 @@ export const useTrafficLight = (): UseTrafficLightReturn => {
 
   const toggleLight = async (pin: "red" | "yellow" | "green") => {
     const currentValue = lights[pin]
-    const newValue = currentValue ? 1 : 0  // if on -> send 1 (OFF), if off -> send 0 (ON)
+    const newValue = currentValue ? 1 : 0 // if on -> send 1 (OFF), if off -> send 0 (ON)
     await sendSignal(pin, newValue)
   }
 
